@@ -191,7 +191,7 @@ FLOORS.forEach((fl,f)=>{
 const orbit=new OrbitControls(camera,renderer.domElement);orbit.enabled=false;orbit.target.set(0,3,0);
 let level=0,doll=false,yaw=Math.PI,pitch=0;const pos=new THREE.Vector3();
 const SPAWN=[[520,290],[440,312],[600,345]];
-function goFloor(f){level=f;doll=false;orbit.enabled=false;const [x,z]=toM(f,...SPAWN[f]);pos.set(x,f*STOREY+1.6,z);refresh();}
+function goFloor(f){level=f;doll=false;orbit.enabled=false;const [x,z]=toM(f,...SPAWN[f]);pos.set(x,f*STOREY+1.6,z);yaw=-Math.PI/2;pitch=0;refresh();}
 function refresh(){
   groups.forEach((g,i)=>g.visible=doll||i<=level);
   document.querySelectorAll('#ui button').forEach(b=>b.classList.toggle('on',doll?b.id==='doll':+b.dataset.f===level&&b.id!=='doll'));
@@ -231,7 +231,7 @@ function loop(){
   }else orbit.update();
   renderer.render(scene,camera);requestAnimationFrame(loop);
 }
-goFloor(0);loop();
+goFloor(0);if(location.hash==='#doll')document.getElementById('doll').click();loop();
 </script>
 </body>
 </html>
